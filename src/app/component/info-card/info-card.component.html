@@ -1,0 +1,22 @@
+<div class="contentCard" (click)="closeModal()" [style.display]="status ? 'block' : 'none'">
+    <div (click)="preventChildClick($event)" class="content">
+        <span class="close" (click)="closeModal()">X</span>
+        <h3>{{pokemon?.name | titlecase}}</h3>
+        <div class="pokeData">
+            <div class="pokemon">
+                <img [src]="sprites[spriteIndex]" alt="Sprite">
+            </div>
+            <div class="info">
+                <div class="stats">
+                    <span class="label">XP</span>
+                    <span class="value">{{pokemon?.base_experience}}</span>
+                </div>
+                <div class="stats" *ngFor="let stat of pokemon?.stats">
+                    <span class="label">{{stat.stat.name | titlecase}}</span>
+                    <span class="value">{{stat.base_stat}}</span>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
