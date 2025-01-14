@@ -12,7 +12,15 @@ import { InfoCardComponent } from "./component/info-card/info-card.component";
 })
 export class AppComponent implements OnInit {
   title = 'practica-springboot';
+  
+  offset:number=0
+  limit:number=20
+  currentPage:number = 1;
+  listPagination:number[] = []
+  cantidadDePaginas:number = 0;
+
   pokemonList:any[]=[];
+  total:number =0;
   next:string="";
   prev:string="";
   statusModal:boolean=false;
@@ -56,12 +64,50 @@ export class AppComponent implements OnInit {
   statusModalChangeChildren(status:boolean){
     this.statusModal=status;
   }
+  nextPage(){
+    this.offset += this.limit;
+    this.currentPage ++;
+    this.getPokemons(this.limit, this.offset) 
+  }
+  prevPage(){
+    this.offset -= this.limit;
+    this.currentPage --;
+    this.getPokemons(this.limit, this.offset) 
+  }
 
-  getPokemons(url?:string){
+  changeListPagination(page?:number){
+    const maxLengthPage:number = 5;
+    let desde:number;
+    let hasta:number;
+    let cantidad = Math.floor(this.total/this.limit); 
+    this.cantidadDePaginas = cantidad + 1
+    console.log(this.cantidadDePaginas);
+    if(page){
+      this.offset = (page-1) * this.limit
+      this. currentPage = page
+      this.getPokemons(this.limit, this.offset) 
+    }
+
+    if(this.currentPage <  maxLengthPage){
+      desde = 1;
+      hasta = this.cantidadDePaginas > maxLengthPage ?   maxLengthPage : this.cantidadDePaginas
+    }else if(this.currentPage > this.cantidadDePaginas - maxLengthPage  ){
+      desde = this.cantidadDePaginas - maxLengthPage
+      hasta = this.cantidadDePaginas;
+    }else{
+      desde = this.currentPage - 2
+      hasta = this.currentPage + 2
+    }
+    this.listPagination = Array.from({length:hasta - desde + 1},(_,i)=> desde + i )
+  }
+  getPokemons(limit?:number, offset?:number){
     this.pokemonList=[];
-    this.pokemonService.getPokemons(url).subscribe((data:any)=>{
+    this.pokemonService.getPokemons(limit, offset).subscribe((data:any)=>{
       this.next=data.next;
       this.prev=data.previous;
+      this.total=data.count;
+      if(!limit)this.changeListPagination(); 
+      console.log(this.listPagination);
       data.results.map((pokemon:any)=>{
         this.pokemonService.getDataPokemon(pokemon.url).subscribe(dataxd=>{
           this.pokemonList=[...this.pokemonList , dataxd];

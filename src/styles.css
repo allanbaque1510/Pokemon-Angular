@@ -23,19 +23,49 @@ footer{
     background: linear-gradient(0deg, rgba(12,61,128,1) 0%, rgba(20,78,156,1) 31%, rgba(56,111,184,1) 48%, rgba(28,109,219,1) 68%, rgba(12,61,128,1) 100%);
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+footer span{
+    color: white;
+    bottom: 0;
 }
 footer button{
     cursor: pointer;
     margin: 10px;
     font-family: 'Press Start 2P', cursive;
-    font-size: 1.4rem;
-    padding: 10px 20px;
+    padding: 5px 20px;
     border-radius: 20px;
-    color: white;
-    text-shadow: 
-    -1px -1px 0 black,  /* Sombra superior izquierda */
-     1px -1px 0 black,  /* Sombra superior derecha */
-    -1px  1px 0 black,  /* Sombra inferior izquierda */
-     1px  1px 0 black;  
+    width: 80px;
     background-color: rgb(123, 255, 198);
+    transition: all ease-in .2s ;
+}
+footer button:hover{
+    padding: 2px 17px;
+}
+footer button:disabled{
+    background-color: rgb(138, 183, 163);
+}
+
+
+footer button:disabled:hover{
+    padding: 5px 20px;
+}
+
+footer button img{
+    width: 100%;
+    transition: all ease-in .2s;
+}
+footer .pagination{
+    width: 50px;
+    padding: 10px 10px;
+    transition: all ease-in .2s;
+}
+
+footer .pagination:hover{
+    padding: 10px 10px;
+    color: rgb(255, 255, 255);
+}
+
+footer .prev img{
+    transform: rotate(180deg);
 }

@@ -17,7 +17,18 @@
   </div>
   <app-info-card (dataPokemonEmit)="dataPokemonChildren($event)" (statusModalChangeEmit)="statusModalChangeChildren($event)" [pokemon]="dataPokemon" [statusModal]="statusModal"></app-info-card>
   <footer>
-    <button (click)="getPokemons(prev)" [style.cursor]="prev === null ? 'not-allowed' : 'pointer'" [disabled]="prev === null" >Prev</button>
-    <button (click)="getPokemons(next)" [disabled]="next === null">Next</button>
+    <button (click)="prevPage()" class="prev" [style.cursor]="prev === null ? 'not-allowed' : 'pointer'" [disabled]="prev === null" ><img src="../assets/image.png" alt=""></button>
+    @if (currentPage > 4) {
+      <button class="pagination" (click)="changeListPagination(1)">1</button>
+      <span>...</span>
+    }
+    @for (item of listPagination; track $index) {
+      <button class="pagination" (click)="changeListPagination(item)">{{item}}</button>
+    }
+    @if (currentPage < cantidadDePaginas - 4) {
+      <span>...</span>
+      <button class="pagination" (click)="changeListPagination(cantidadDePaginas)">{{cantidadDePaginas}}</button>
+    }
+    <button (click)="nextPage()" class="next" [disabled]="next === null"><img src="../assets/image.png" alt=""></button>
   </footer>
 </div>

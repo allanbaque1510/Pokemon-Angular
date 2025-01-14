@@ -5,14 +5,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class PokemonService {
-
+  URL:string = "https://pokeapi.co/api/v2/pokemon";
   constructor(private httpClient:HttpClient) { }
 
-  getPokemons(url:string | undefined){
-    if(url){
-      return this.httpClient.get(url);
+  getPokemons(limit?:number , offset?:number ){
+    if(limit && offset){
+      return this.httpClient.get(this.URL+"?offset="+offset+"&limit="+limit);
     }
-    return this.httpClient.get("https://pokeapi.co/api/v2/pokemon");
+    return this.httpClient.get(this.URL);
   }
 
   getDataPokemon(url:string){
